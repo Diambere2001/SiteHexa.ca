@@ -177,7 +177,7 @@
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-       <a href="#" class="navbar-brand d-flex align-items-center justify-content-center logo-hexa">
+       <a href="{% url 'login_hexa' %}" class="navbar-brand d-flex align-items-center justify-content-center logo-hexa">
   <img src="{% static 'images/logoHexa.png' %}" 
        alt="HexaQuébec" 
        class="logo-img">
@@ -239,12 +239,12 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto nav-modern">
-          <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Accueil</a></li>
-          <li class="nav-item"><a href="{% url 'services' %}" class="nav-link active">Services</a></li>
-          <li class="nav-item"><a href="#produits" class="nav-link">Produits</a></li>
-          <li class="nav-item"><a href="#portfolio" class="nav-link">Projets</a></li>
-          <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
-        </ul>
+        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Accueil</a></li>
+        <li class="nav-item"><a href="{% url 'services' %}" class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}">Services</a></li>
+        <li class="nav-item"><a href="{% url 'produits_list' %}" class="nav-link {% if request.resolver_match.url_name == 'produits_list' %}active{% endif %}">Articles</a></li>
+        <li class="nav-item"><a href="{% url 'portfolio' %}" class="nav-link">Projets</a></li>
+        <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link active">Contact</a></li>
+      </ul>
       </div>
     </div>
   </nav>

@@ -1,0 +1,14 @@
+<div class="chat-container">
+    <div id="chat-body" class="chat-body"></div>
+
+    <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Écrire un message...">
+        <button id="send-btn">Envoyer</button>
+    </div>
+</div>
+
+<!-- Notification sound -->
+<audio id="notif-sound" src="{% static 'sounds/notif.mp3' %}" preload="auto"></audio>
+
+<script src="{% static 'js/chatbot.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/chat.css' %}">

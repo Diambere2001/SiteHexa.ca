@@ -247,6 +247,139 @@
   line-height: 1.5;
 }
 
+/* Séparateur élégant */
+.separator-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.separator-line {
+  width: 120px;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent, #c6a87d, transparent);
+}
+
+.separator-icon {
+  color: #c6a87d;
+  font-size: 1.5rem;
+  margin: 0 12px;
+}
+
+/* Titre section */
+.section-title {
+  color: #c6a87d;
+  font-weight: 800;
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* Cartes annonces */
+.annonce-card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 18px;
+  backdrop-filter: blur(5px);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border: 1px solid rgba(198, 168, 125, 0.15);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+}
+
+.annonce-card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+}
+
+/* Image */
+.annonce-img {
+  height: 230px;
+  object-fit: cover;
+  border-radius: 18px 18px 0 0;
+}
+
+/* Titre annonce */
+.card-title {
+  color: #c6a87d;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+/* Texte annonce */
+.card-text {
+  color: #dcdcdc;
+}
+
+/* Date */
+.annonce-date {
+  color: #aaa;
+  font-size: 0.8rem;
+  margin-top: 10px;
+}
+
+/* Bouton Lire Plus */
+.btn-annonce {
+  border: 2px solid #c6a87d;
+  color: #c6a87d;
+  padding: 8px 25px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: 0.4s ease;
+  display: inline-block;
+}
+
+.btn-annonce:hover {
+  background: #c6a87d;
+  color: #0b132b;
+  transform: scale(1.08);
+}
+
+/* Style général du texte */
+.typing-responsive {
+    font-family: 'Poppins', sans-serif;
+    color: #c6a87d;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #c6a87d;
+    padding-right: 5px;
+}
+
+/* PC */
+@media (min-width: 1025px) {
+    .typing-responsive {
+        font-size: 32px;
+    }
+}
+
+/* Tablette */
+@media (min-width: 481px) and (max-width: 1024px) {
+    .typing-responsive {
+        font-size: 26px;
+    }
+}
+
+/* Téléphone */
+@media (max-width: 480px) {
+    .typing-responsive {
+        font-size: 20px;
+        white-space: normal;   /* Permet de voir le texte même petit */
+        line-height: 1.3;
+    }
+}
+.partner-card {
+    background: white;
+    border-radius: 18px;
+    border: 1px solid #e2e8f0;
+    transition: 0.3s ease;
+}
+
+.partner-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
 
   </style>
 </head>
@@ -255,11 +388,14 @@
 <!-- ===== NAVBAR ===== -->
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
- <a href="#" class="navbar-brand d-flex align-items-center justify-content-center logo-hexa">
-  <img src="{% static 'images/logoHexa.png' %}" 
-       alt="HexaQuébec" 
-       class="logo-img">
+ <a href="{% url 'login_hexa' %}" 
+   class="navbar-brand d-flex align-items-center justify-content-center logo-hexa">
+    
+    <img src="{% static 'images/logoHexa.png' %}" 
+         alt="HexaQuébec" 
+         class="logo-img">
 </a>
+
 
 <style>
 .logo-hexa {
@@ -411,6 +547,186 @@
   color: #004b63;
 }
 
+/* ===== BUBBLE ===== */
+#ai-bubble {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #0d6efd;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 28px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    animation: pulse 1.5s infinite;
+    z-index: 9999;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+/* ===== CHATBOX ===== */
+#ai-chat {
+    position: fixed;
+    bottom: 100px;
+    right: 25px;
+    width: 360px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+    overflow: hidden;
+    z-index: 99999;
+    display: none;
+}
+
+#ai-header {
+    background: #0d6efd;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#chat-body {
+    height: 330px;
+    overflow-y: auto;
+    padding: 10px;
+    background: #f4f7fb;
+}
+
+.user-msg, .bot-msg {
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    max-width: 80%;
+}
+
+.user-msg {
+    background: #d1e7ff;
+    margin-left: auto;
+}
+
+.bot-msg {
+    background: #fff;
+    border: 1px solid #e3e3e3;
+}
+
+/* ===== FOOTER ===== */
+#chat-footer {
+    display: flex;
+    border-top: 1px solid #eee;
+}
+
+#chat-footer input {
+    width: 80%;
+    padding: 12px;
+    border: none;
+    outline: none;
+}
+
+#chat-footer button {
+    width: 20%;
+    background: #0d6efd;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* ===== FORMULAIRE TECHNIQUE ===== */
+#ai-form {
+    padding: 15px;
+    background: #eef4ff;
+}
+
+#ai-form h4 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #0d6efd;
+    font-weight: bold;
+}
+
+#ai-form input,
+#ai-form textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #d8d8d8;
+    font-size: 14px;
+}
+
+#ai-form button {
+    width: 100%;
+    background: #0d6efd;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#ai-form button:hover {
+    background: #003c99;
+}
+#typing-container {
+    text-align: center;
+    position: relative;
+    padding: 20px;
+}
+
+/* Logo toujours visible */
+#hexa-logo {
+    width: 180px;
+    margin-bottom: 10px;
+}
+
+/* Texte animé */
+.typing-responsive {
+    font-family: 'Poppins', sans-serif;
+    color: #c6a87d;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #c6a87d;
+    padding-right: 5px;
+    margin-top: 10px;
+}
+
+/* PC */
+@media (min-width: 1025px) {
+    .typing-responsive {
+        font-size: 32px;
+    }
+    #hexa-logo { width: 220px; }
+}
+
+/* Tablette */
+@media (min-width: 481px) and (max-width: 1024px) {
+    .typing-responsive {
+        font-size: 26px;
+    }
+    #hexa-logo { width: 180px; }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .typing-responsive {
+        font-size: 20px;
+        white-space: normal;
+        line-height: 1.3;
+    }
+    #hexa-logo { width: 150px; }
+}
+
 </style>
 
 
@@ -422,8 +738,13 @@
       <ul class="navbar-nav ms-auto nav-modern">
         <li class="nav-item"><a href="#" class="nav-link active">Accueil</a></li>
         <li class="nav-item"><a href="{% url 'services' %}" class="nav-link">Services</a></li>
-       <a href="{% url 'produits_list' %}" class="nav-link">Produits</a>
-        <li class="nav-item"><a href="#portfolio" class="nav-link">Projets</a></li>
+       <a href="{% url 'produits_list' %}" class="nav-link">Articles</a>
+        <li class="nav-item">
+    <a href="{% url 'portfolio' %}" class="nav-link">Projets</a>
+</li>
+
+        <li class="nav-item"><a href="{% url 'client_login' %}" class="nav-link">Clients</a></li>
+         
         <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
       </ul>
     </div>
@@ -440,158 +761,295 @@
   </div>
 </header>
 
-
 {% load static %}
+<section id="annonces" class="py-5 position-relative" style="background:#0b132b; color:#f7f3ec;">
 
-<section id="annonces" class="py-5" style="background: #0b132b; color: #f7f3ec;">
+  <!-- Ligne décorative -->
+  <div class="separator-container mb-5">
+    <div class="separator-line"></div>
+    <div class="separator-icon">
+      <i class="fas fa-star"></i>
+    </div>
+    <div class="separator-line"></div>
+  </div>
+
   <div class="container text-center">
-    <h2 class="mb-5" style="color:#c6a87d; font-weight:700; text-transform:uppercase; letter-spacing:1px;">
+    <h2 class="section-title mb-4">
       Nos Annonces
     </h2>
 
     {% if annonces %}
     <div class="row g-4">
+
       {% for annonce in annonces %}
       <div class="col-md-4">
-        <div class="card h-100 border-0 shadow-lg"
-             style="background: rgba(255,255,255,0.05); border-radius: 15px; transition: transform 0.4s ease;">
-          
+        <div class="annonce-card card h-100">
+
           {% if annonce.image %}
-            <img src="{{ annonce.image.url }}" class="card-img-top" alt="{{ annonce.title }}" 
-                 style="height:230px; object-fit:cover; border-top-left-radius:15px; border-top-right-radius:15px;">
+            <img src="{{ annonce.image.url }}" class="card-img-top annonce-img" alt="{{ annonce.title }}">
           {% else %}
-            <img src="{% static 'images/default-annonce.jpg' %}" class="card-img-top" alt="Annonce"
-                 style="height:230px; object-fit:cover; border-top-left-radius:15px; border-top-right-radius:15px;">
+            <img src="{% static 'images/default-annonce.jpg' %}" class="card-img-top annonce-img" alt="Annonce">
           {% endif %}
 
-          <div class="card-body">
-            <h5 class="card-title" style="color:#c6a87d; font-weight:700;">
-              {{ annonce.title }}
-            </h5>
-            <p class="card-text" style="color:#ddd;">
-              {{ annonce.content|truncatewords:25 }}
-            </p>
+          <div class="card-body text-start">
+            <h5 class="card-title">{{ annonce.title }}</h5>
+            <p class="card-text">{{ annonce.content|truncatewords:25 }}</p>
+
             {% if annonce.published_at %}
-              <p class="text-muted small">{{ annonce.published_at|date:"d M Y" }}</p>
+              <p class="annonce-date">{{ annonce.published_at|date:"d M Y" }}</p>
             {% endif %}
           </div>
 
-          <div class="card-footer bg-transparent border-0">
-            <a href="{% url 'annonce_detail' annonce.id %}" 
-               class="btn btn-outline-light px-4 py-2"
-               style="border-color:#c6a87d; color:#c6a87d; border-radius:30px; transition:0.3s;">
-              Lire plus
-            </a>
+          <div class="card-footer border-0 bg-transparent text-center">
+            <a href="{% url 'annonce_detail' annonce.id %}" class="btn-annonce">Lire plus</a>
           </div>
+
         </div>
       </div>
       {% endfor %}
+
     </div>
     {% else %}
-      <p class="text-center text-light">Aucune annonce disponible pour le moment.</p>
+      <p class="text-light">Aucune annonce disponible pour le moment.</p>
     {% endif %}
   </div>
 </section>
 
-
+<!-- FontAwesome (icône étoile) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
 
 <!-- ===== POST-LOGOUT AVEC LION ===== -->
 <div id="post-logout">
-  <div class="lion-sleep">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-      <circle cx="256" cy="256" r="200" fill="#c6a87d" stroke="#b3916b" stroke-width="8"/>
-      <circle cx="180" cy="220" r="20" fill="#fff"/>
-      <circle cx="332" cy="220" r="20" fill="#fff"/>
-      <circle cx="180" cy="220" r="10" fill="#000"/>
-      <circle cx="332" cy="220" r="10" fill="#000"/>
-      <path d="M180 320 Q256 370 332 320" stroke="#000" stroke-width="8" fill="transparent" stroke-linecap="round"/>
-      <path d="M220 370 Q256 390 292 370" stroke="#000" stroke-width="6" fill="transparent" stroke-linecap="round"/>
-      <line x1="220" y1="370" x2="292" y2="370" stroke="#000" stroke-width="6"/>
-      <path class="eyelid-left" d="M160 220 Q180 200 200 220" stroke="#c6a87d" stroke-width="8" fill="none"/>
-      <path class="eyelid-right" d="M312 220 Q332 200 352 220" stroke="#c6a87d" stroke-width="8" fill="none"/>
-    </svg>
-  </div>
-  <h2 id="typing-text"></h2>
+    <div class="lion-sleep">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <circle cx="256" cy="256" r="200" fill="#c6a87d" stroke="#b3916b" stroke-width="8"/>
+            <circle cx="180" cy="220" r="20" fill="#fff"/>
+            <circle cx="332" cy="220" r="20" fill="#fff"/>
+            <circle cx="180" cy="220" r="10" fill="#000"/>
+            <circle cx="332" cy="220" r="10" fill="#000"/>
+            <path d="M180 320 Q256 370 332 320" stroke="#000" stroke-width="8" fill="transparent" stroke-linecap="round"/>
+            <path d="M220 370 Q256 390 292 370" stroke="#000" stroke-width="6" fill="transparent" stroke-linecap="round"/>
+            <line x1="220" y1="370" x2="292" y2="370" stroke="#000" stroke-width="6"/>
+            <path class="eyelid-left" d="M160 220 Q180 200 200 220" stroke="#c6a87d" stroke-width="8" fill="none"/>
+            <path class="eyelid-right" d="M312 220 Q332 200 352 220" stroke="#c6a87d" stroke-width="8" fill="none"/>
+        </svg>
+    </div>
+
+    <h2 id="typing-text"></h2>
 </div>
 
-<!-- ===== CHATBOT ===== -->
+<style>
+/* --- Centrage global --- */
+#post-logout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+}
+
+/* --- Lion --- */
+.lion-sleep svg {
+    width: 230px;
+    max-width: 70vw;
+}
+
+/* --- Texte animé --- */
+#typing-text {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #333;
+    animation: blink 0.7s infinite;
+}
+
+/* Curseur clignotant */
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* --- Responsive mobile --- */
+@media (max-width: 600px) {
+    #typing-text {
+        font-size: 20px;
+        margin-top: 15px;
+        white-space: normal; /* IMPORTANT : pour que le texte ne disparaisse pas en petit écran */
+        border-right: none;
+    }
+}
+</style>
+
+
+<!-- ===== CHATBOT HTML ===== -->
 <div id="ai-bubble">💬</div>
 
-<div id="ai-chat" style="display: none;">
-  <div id="ai-header">🤖 Assistant HexaQuébec</div>
-  <div id="chat-body"></div>
-  <div id="chat-footer">
-    <input type="text" id="user-input" placeholder="Écrivez votre message..." />
-    <button id="send-btn">Envoyer</button>
-  </div>
+<div id="ai-chat" style="display:none;">
+    
+    <!-- Header -->
+    <div id="ai-header">🤖 Assistant HexaQuébec</div>
+
+    <!-- Zone des messages -->
+    <div id="chat-body"></div>
+
+    <!-- ===== FORMULAIRE AJOUTÉ ===== -->
+    <div id="ai-form" style="display:none; padding: 10px; border-top: 1px solid #c6a87d40;">
+        <h4 style="font-size:16px; margin-bottom:10px;">📄 Formulaire HexaQuébec</h4>
+
+        <form id="chatbot-form" method="POST" action="/chatbot_form/">
+            <div style="margin-bottom:10px;">
+                <label>Votre nom :</label>
+                <input type="text" name="nom" required class="form-control">
+            </div>
+
+            <div style="margin-bottom:10px;">
+                <label>Votre email :</label>
+                <input type="email" name="email" required class="form-control">
+            </div>
+
+            <div style="margin-bottom:10px;">
+                <label>Votre message :</label>
+                <textarea name="message" required class="form-control" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" style="background:#c6a87d; border:none;">
+                Envoyer le formulaire
+            </button>
+        </form>
+    </div>
+    <!-- ===== FIN FORMULAIRE ===== -->
+
+    <!-- Champ de saisie chatbot -->
+    <div id="chat-footer">
+        <input type="text" id="user-input" placeholder="Écrivez votre message...">
+        <button id="send-btn">Envoyer</button>
+    </div>
 </div>
 
-<section id="urgence-technique" class="py-5" style="background: rgba(11,19,43,0.97); color: #fff;">
+<!-- Ligne animée en haut -->
+
+
+<section class="py-5" style="background:#0b132b; color:#f7f3ec;">
+  <div class="top-line"></div>
   <div class="container">
+    <!-- Titre et description avec fade-in -->
+    <h2 class="text-center mb-4 section-title">
+      Nos Partenaires <span style="color:#c6a87d;">HexaQuébec</span>
+    </h2>
+    <p class="text-center mb-5 text-light section-desc">
+      Nous collaborons avec des entreprises solides pour offrir les meilleurs services.
+    </p>
 
-    <!-- Message de confirmation -->
-    <div id="confirmation-card" class="card shadow-lg border-0 mx-auto mt-4"
-         style="max-width: 600px; border-radius: 20px; background: rgba(255,255,255,0.1); display: none; opacity: 0; transition: opacity 1s;">
-      <div class="card-body text-center">
-        <div class="mb-3">
-          <i class="fa-solid fa-circle-check fa-3x" style="color:#c6a87d;"></i>
+    <!-- Slider des partenaires -->
+    <div class="partner-slider">
+      <div class="partner-track">
+        {% for partenaire in partenaires %}
+        <div class="partner-card wow fadeIn" data-wow-delay="{{ forloop.counter0|add:'0.1' }}s">
+          {% if partenaire.logo %}
+            <img src="{{ partenaire.logo.url }}" alt="{{ partenaire.nom }}" class="img-fluid" style="max-height:80px;">
+          {% else %}
+            <img src="{% static 'img/default_logo.png' %}" alt="Logo par défaut" class="img-fluid" style="max-height:80px;">
+          {% endif %}
         </div>
-        <h4 style="color:#c6a87d;">Message envoyé avec succès !</h4>
-        <p class="text-light mt-2">
-          Merci pour votre confiance 💛<br>
-          Notre équipe vous contactera dans les plus brefs délais.
-        </p>
+        {% endfor %}
+        {% for partenaire in partenaires %}
+        <div class="partner-card wow fadeIn" data-wow-delay="{{ forloop.counter0|add:'0.1' }}s">
+          {% if partenaire.logo %}
+            <img src="{{ partenaire.logo.url }}" alt="{{ partenaire.nom }}" class="img-fluid" style="max-height:80px;">
+          {% else %}
+            <img src="{% static 'img/default_logo.png' %}" alt="Logo par défaut" class="img-fluid" style="max-height:80px;">
+          {% endif %}
+        </div>
+        {% endfor %}
       </div>
     </div>
-
-    <!-- Formulaire d’urgence -->
-    <div id="urgence-form" class="card shadow-lg border-0 mx-auto"
-         style="max-width: 600px; border-radius: 20px; background: rgba(255,255,255,0.08); opacity: 0; display: block; transition: opacity 0.5s;">
-      <div class="card-body text-center">
-        <h3 class="mb-3" style="color: #c6a87d; font-weight: 700;">
-          ⚠️ Problème technique urgent ?
-        </h3>
-        <p class="text-light mb-4">
-          Remplissez ce formulaire et notre équipe vous contactera immédiatement.
-        </p>
-
-        <form id="urgence-form-inner" method="POST" action="{% url 'urgence' %}">
-          {% csrf_token %}
-          <div class="mb-3 text-start">
-            {{ form.nom.label_tag }}
-            {{ form.nom }}
-          </div>
-          <div class="mb-3 text-start">
-            {{ form.email.label_tag }}
-            {{ form.email }}
-          </div>
-          <div class="mb-3 text-start">
-            {{ form.telephone.label_tag }}
-            {{ form.telephone }}
-          </div>
-          <div class="mb-3 text-start">
-            {{ form.message.label_tag }}
-            {{ form.message }}
-          </div>
-          <div class="text-center">
-            <button type="submit"
-                    class="btn btn-outline-warning mt-3 px-4 py-2"
-                    style="border-radius:30px;">
-              <i class="fa-solid fa-paper-plane me-2"></i> Envoyer
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
   </div>
 </section>
 
+<!-- Styles -->
+<style>
+/* Ligne animée */
+.top-line {
+  height:4px;
+  width:60px;
+  background:#c6a87d;
+  margin:0 auto 30px;
+  border-radius:2px;
+  animation: pulseLine 1.5s infinite alternate;
+}
+@keyframes pulseLine {
+  0% { transform: scaleX(0.7); opacity:0.6; }
+  50% { transform: scaleX(1); opacity:1; }
+  100% { transform: scaleX(0.7); opacity:0.6; }
+}
+
+/* Slider */
+.partner-slider {
+  overflow:hidden;
+  width:100%;
+  position:relative;
+}
+.partner-track {
+  display:flex;
+  width:max-content;
+  animation: scroll 20s linear infinite;
+}
+.partner-card {
+  flex:0 0 auto;
+  margin:0 30px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#f7f3ec;
+  border-radius:12px;
+  padding:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+.partner-card:hover {
+  transform: scale(1.15);
+  box-shadow:0 10px 25px rgba(198,168,125,0.6);
+}
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Fade-in Titre & Paragraphe */
+.section-title, .section-desc {
+  opacity:0;
+  transform:translateY(20px);
+  animation: fadeUp 1s forwards;
+}
+.section-title { animation-delay:0.2s; }
+.section-desc { animation-delay:0.5s; }
+@keyframes fadeUp {
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .partner-card { margin:0 15px; padding:10px; }
+}
+</style>
+
+<!-- Animate.css + WOW.js pour delays des logos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.2.0/wow.min.js"></script>
+<script>
+  new WOW().init();
+</script>
 
 
 
+
+ 
 
 <footer class="footer py-5">
   <div class="container">
@@ -621,9 +1079,9 @@
       <div class="col-md-3 mb-4 text-center">
         <h5 class="footer-title">Suivez-nous</h5>
         <div class="social-train">
-          <a href="https://www.facebook.com/diambere.kamara.2025/" class="social-link"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="https://m.facebook.com/p/HexaQuebec-61578598457506/?deoia=1&wtsid=rdr_0QJab4d0DoCHtrW4n" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.tiktok.com/@hexaquebec.ca?_r=1&_t=ZS-91qqwvDvYXd" class="social-link"><i class="fab fa-tiktok"></i></a>
+          <a href="https://l.instagram.com/?u=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1JWMqrXy5C%2F%3Fmibextid%3DwwXIfr%26utm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio&e=AT3qddxdmjegj7nKn1LQ2N1ohnskX3GTWP3gLcmqaHGRFSmKnDwFi2ZOy8frumubJVIY28hCktBwPLeYk6sZyt-DS-RFLf9123sYrMxWQw" class="social-link"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
 
@@ -638,7 +1096,7 @@
     <p class="owner-role mb-3">Développeur Backend spécialisé en Django, Flask & Node.js</p>
     <p class="owner-desc">
       Passionné par la conception de solutions numériques performantes et sécurisées,
-      il dirige HexaQuébec avec une vision axée sur l’innovation et la qualité.
+      il dirige HexaQuébec avec une vision axée sur l'innovation et la qualité.
     </p>
   </div>
 </div>
@@ -651,200 +1109,185 @@
 <!-- ===== SCRIPTS ===== -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
   
-</script>
-<script>
-  // ===== Navbar scroll =====
-  window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.navbar');
-    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
-  });
-
-  // ===== Retour accueil au clic ou touche clavier =====
-  function restoreHome() {
-    const postLogout = document.getElementById('post-logout');
-    const navbar = document.querySelector('.navbar');
-    if (postLogout) postLogout.style.display = 'none';
-    if (navbar) navbar.style.display = 'flex';
-  }
-  document.addEventListener('keydown', restoreHome);
-  document.addEventListener('click', restoreHome);
-
-  // Masquer navbar initialement
+</script><script>
+/* ============================
+   NAVBAR SCROLL
+============================ */
+window.addEventListener('scroll', function() {
   const navbar = document.querySelector('.navbar');
-  if (navbar) navbar.style.display = 'none';
+  if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
 
-  // ===== Animation texte typing =====
-  const text = "Bienvenue sur le territoire de HexaQuébec";
-  const typingText = document.getElementById("typing-text");
-  let index = 0;
-  function typeEffect() {
-    if (typingText && index < text.length) {
-      typingText.innerHTML += text.charAt(index);
-      index++;
-      setTimeout(typeEffect, 120);
+/* ============================
+   RETOUR ACCUEIL
+============================ */
+function restoreHome() {
+  const postLogout = document.getElementById('post-logout');
+  const navbar = document.querySelector('.navbar');
+  if (postLogout) postLogout.style.display = 'none';
+  if (navbar) navbar.style.display = 'flex';
+}
+document.addEventListener('keydown', restoreHome);
+document.addEventListener('click', restoreHome);
+
+const navbar = document.querySelector('.navbar');
+if (navbar) navbar.style.display = 'none';
+
+/* ============================
+   TEXT TYPING ANIMATION
+============================ */
+const text = "Bienvenue sur le territoire de HexaQuébec";
+const typingText = document.getElementById("typing-text");
+let index = 0;
+
+function typeEffect() {
+    if (index < text.length) {
+        typingText.textContent += text.charAt(index);
+        index++;
+        setTimeout(typeEffect, 70);
+    } else {
+        // Après 3 secondes, le texte disparaît
+        setTimeout(() => {
+            typingText.style.opacity = "0";
+            typingText.style.transition = "opacity 1.5s ease";
+        }, 3000);
     }
-  }
-  setTimeout(typeEffect, 1000);
+}
 
-  // ===== Chatbot toggle et interactions =====
-  const bubble = document.getElementById('ai-bubble');
-  const chatBox = document.getElementById('ai-chat');
-  const sendBtn = document.getElementById('send-btn');
-  const input = document.getElementById('user-input');
-  const chatBody = document.getElementById('chat-body');
+typeEffect();
 
-  if (bubble && chatBox) {
+
+/* ============================
+   CHATBOT
+============================ */
+const bubble = document.getElementById("ai-bubble");
+const chat = document.getElementById("ai-chat");
+const chatBody = document.getElementById("chat-body");
+const sendBtn = document.getElementById("send-btn");
+const input = document.getElementById("user-input");
+const formContainer = document.getElementById("ai-form");
+
+let messageEnvoye = false;
+
+/* ---- Ouvrir / Fermer chatbot ---- */
+if (bubble) {
     bubble.onclick = () => {
-      chatBox.style.display = (chatBox.style.display === 'none' ? 'flex' : 'none');
-    };
-  }
 
-  if (sendBtn && input && chatBody) {
-    sendBtn.onclick = async () => {
-      const text = input.value.trim();
-      if (!text) return;
+        const isClosed = chat.style.display === "none";
+        chat.style.display = isClosed ? "block" : "none";
 
-      chatBody.innerHTML += `<p class="user"><strong>Vous:</strong> ${text}</p>`;
-      input.value = '';
-      chatBody.innerHTML += `<p><em>Assistant HexaQuébec réfléchit...</em></p>`;
-      chatBody.scrollTop = chatBody.scrollHeight;
-
-      try {
-        const response = await fetch("/chatbot_ai/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text })
-        });
-
-        const data = await response.json();
-        chatBody.innerHTML = chatBody.innerHTML.replace("<p><em>Assistant HexaQuébec réfléchit...</em></p>", "");
-
-        if (data.reply) {
-          chatBody.innerHTML += `<p class="ai"><strong>Assistant HexaQuébec:</strong> ${data.reply}</p>`;
-        } else {
-          chatBody.innerHTML += `<p style="color:orange;"><strong>Assistant HexaQuébec:</strong> Désolé, je n'ai pas compris 😅</p>`;
+        if (isClosed && chatBody) {
+            chatBody.innerHTML = `
+                <div class="bot-msg">
+                    👋 Bonjour, je suis le représentant du <b>soutien technique HexaQuébec</b>.<br><br>
+                    Décrivez votre problème ci-dessous.<br>
+                    Merci !
+                </div>
+            `;
         }
-        chatBody.scrollTop = chatBody.scrollHeight;
-
-      } catch (err) {
-        chatBody.innerHTML += `<p style="color:red;"><strong>Erreur:</strong> Impossible de contacter l’assistant 😢</p>`;
-      }
     };
-  }
-document.addEventListener('DOMContentLoaded', () => {
-  const formCard = document.getElementById('urgence-form');
-  const confirmationCard = document.getElementById('confirmation-card');
-  const formInner = document.getElementById('urgence-form-inner');
+}
 
-  if (!formCard || !confirmationCard || !formInner) return;
+/* ---- Envoi du message utilisateur ---- */
+if (sendBtn) {
+    sendBtn.onclick = () => {
 
-  // Initialisation
-  formCard.style.opacity = 0;
-  confirmationCard.style.opacity = 0;
-  formCard.style.display = 'block';
-  setTimeout(() => { formCard.style.opacity = 1; }, 50);
+        let msg = input.value.trim();
+        if (!msg) return;
 
-  // Gestion de la soumission via AJAX
-  formInner.addEventListener('submit', async (e) => {
-    e.preventDefault(); // empêche le rechargement
+        messageEnvoye = true;
 
-    const formData = new FormData(formInner);
-    const data = Object.fromEntries(formData.entries());
+        chatBody.innerHTML += `<div class="user-msg">${msg}</div>`;
+        chatBody.scrollTop = chatBody.scrollHeight;
+        input.value = "";
 
-    try {
-      const response = await fetch(formInner.action, {
-        method: 'POST',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        body: formData
-      });
+        const text = msg.toLowerCase();
 
-      if (response.ok) {
-        // Cache le formulaire et affiche le message de confirmation
-        formCard.style.opacity = 0;
-        setTimeout(() => { formCard.style.display = 'none'; }, 500);
+        /* ===============================
+           RÉPONSE AUTOMATIQUE HEXAQUÉBEC
+        =============================== */
+        chatBody.innerHTML += `
+           <div class="bot-msg">
+    ⚠️ <b>Information administrative :</b><br><br>
+    En raison des politiques internes de <b>HexaQuébec</b>, je ne suis pas autorisé à répondre 
+    aux questions d’ordre personnel, juridique ou technique avancée.<br><br>
+    Pour obtenir une prise en charge officielle, merci de <b>créer un compte client</b> 
+    ou de <b>compléter le formulaire de contact <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li> </b>
+</div>
 
-        confirmationCard.style.display = 'block';
-        setTimeout(() => { confirmationCard.style.opacity = 1; }, 50);
+        `;
 
-        // Après 5 secondes, fade-out et réaffiche le formulaire
-        setTimeout(() => {
-          confirmationCard.style.opacity = 0;
-          setTimeout(() => {
-            confirmationCard.style.display = 'none';
-            formCard.style.display = 'block';
-            formCard.style.opacity = 0;
-            setTimeout(() => { formCard.style.opacity = 1; }, 50);
-          }, 1000);
-        }, 5000);
+        /* ===============================
+           DÉTECTION DES PROBLÈMES → FORMULAIRE
+        =============================== */
+        if (
+            text.includes("problème") ||
+            text.includes("bug") ||
+            text.includes("erreur") ||
+            text.includes("technique") ||
+            text.includes("aide") ||
+            text.includes("support")
+        ) {
+            chatBody.innerHTML += `
+                <div class="bot-msg">
+                    🔧 Afin de mieux vous aider, merci de remplir le champs :
+                </div>
+            `;
 
-        // Réinitialise le formulaire
-        formInner.reset();
-      } else {
-        alert("Erreur : impossible d'envoyer le message.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Erreur réseau : impossible de contacter le serveur.");
-    }
-  });
-});
+            if (formContainer) {
+                formContainer.style.display = "block";
+            }
+        }
 
+        chatBody.scrollTop = chatBody.scrollHeight;
+    };
+}
 
+/* ============= FORMULAIRE TECHNIQUE =================== */
+const chatbotForm = document.getElementById("chatbot-form");
 
-document.addEventListener('DOMContentLoaded', () => {
-  const formCard = document.getElementById('urgence-form');
-  const confirmationCard = document.getElementById('confirmation-card');
-  const formInner = document.getElementById('urgence-form-inner');
+if (chatbotForm) {
+    chatbotForm.onsubmit = (e) => {
+        e.preventDefault();
 
-  // Fade-in du formulaire
-  setTimeout(() => { formCard.style.opacity = 1; }, 50);
+        if (!messageEnvoye) {
+            alert("Veuillez d’abord envoyer un message avant de remplir le formulaire.");
+            return;
+        }
 
-  // Soumission AJAX
-  formInner.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(formInner);
+        let formData = new FormData(chatbotForm);
 
-    try {
-      const response = await fetch(formInner.action, {
-        method: 'POST',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        body: formData
-      });
+        fetch("/chatbot_form/", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(response => {
 
-      if (response.ok) {
-        // Cacher formulaire et afficher confirmation
-        formCard.style.opacity = 0;
-        setTimeout(() => { formCard.style.display = 'none'; }, 500);
+            formContainer.style.display = "none";
 
-        confirmationCard.style.display = 'block';
-        setTimeout(() => { confirmationCard.style.opacity = 1; }, 50);
+            chatBody.innerHTML += `
+                <div class="bot-msg">
+                    ✅ Merci ! Votre message et votre formulaire ont été transmis à l’équipe HexaQuébec.<br>
+                    Nous vous contacterons sous peu.
+                </div>
+            `;
 
-        // Retour du formulaire après 5s
-        setTimeout(() => {
-          confirmationCard.style.opacity = 0;
-          setTimeout(() => {
-            confirmationCard.style.display = 'none';
-            formCard.style.display = 'block';
-            setTimeout(() => { formCard.style.opacity = 1; }, 50);
-          }, 500);
-        }, 5000);
+            chatBody.scrollTop = chatBody.scrollHeight;
+            chatbotForm.reset();
+        });
+    };
+}
 
-        formInner.reset();
-      } else {
-        alert("Erreur : impossible d'envoyer le message.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Erreur réseau : impossible de contacter le serveur.");
-    }
-  });
-});
-
+AOS.init({
+        duration: 800,
+        once: true
+    });
 </script>
 
 
 
-
+<script src="{% static 'js/chatbot.js' %}"></script>
 
 
 </body>

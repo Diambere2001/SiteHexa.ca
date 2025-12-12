@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Développement Web & Mobile | HexaQuébec</title>
+
+  <!-- CSS & Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(180deg, #0b132b 0%, #1c2541 100%);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .service-section {
+      min-height: 100vh;
+      padding: 100px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* BACKGROUND ANIMÉ */
+    .service-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80")
+                 center/cover no-repeat;
+      opacity: 0.20;
+      z-index: 0;
+      animation: bgZoom 22s infinite alternate ease-in-out;
+    }
+
+    @keyframes bgZoom {
+      from { transform: scale(1); }
+      to { transform: scale(1.08); }
+    }
+
+    /* CARD GLASS */
+    .service-card {
+      z-index: 2;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(198,168,125,0.3);
+      border-radius: 20px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      max-width: 850px;
+      box-shadow: 0 0 40px rgba(198,168,125,0.15);
+      animation: fadeIn 1.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .service-card i {
+      font-size: 70px;
+      color: #c6a87d;
+      margin-bottom: 20px;
+    }
+
+    .service-card h1 {
+      font-weight: 700;
+      font-size: 2.6rem;
+      text-shadow: 0 0 25px rgba(198,168,125,0.6);
+      color: #f0d49d;
+      margin-bottom: 20px;
+    }
+
+    .service-card p {
+      color: #ddd;
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      line-height: 1.7;
+    }
+
+    .service-card ul {
+      text-align: left;
+      margin: 0 auto 30px;
+      max-width: 600px;
+    }
+
+    .service-card ul li {
+      margin: 10px 0;
+      font-size: 1.05rem;
+      color: #eee;
+      display: flex;
+      align-items: center;
+    }
+
+    .service-card ul li i {
+      margin-right: 8px;
+      color: #c6a87d;
+    }
+
+    .service-img {
+      width: 100%;
+      border-radius: 14px;
+      margin-top: 20px;
+      box-shadow: 0 0 25px rgba(198,168,125,0.4);
+      animation: imgFade 1.5s ease;
+    }
+
+    @keyframes imgFade {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* BOUTON RETOUR */
+    .btn-retour {
+      margin-top: 40px;
+      background: #c6a87d;
+      color: #0b132b;
+      border-radius: 50px;
+      padding: 12px 30px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+      display: inline-block;
+    }
+
+    .btn-retour:hover {
+      background: #f0d49d;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(198,168,125,0.6);
+    }
+  </style>
+</head>
+
+<body>
+  <section class="service-section">
+
+    <div class="service-card">
+      <i class="fa-solid fa-laptop-code"></i>
+
+      <h1>Développement Web & Mobile</h1>
+
+      <p>
+        Création de sites vitrines modernes, plateformes e-commerce, applications mobiles performantes
+        et solutions sur mesure avec Laravel, React, Django et Flutter.
+      </p>
+
+      <ul>
+        <li><i class="fa-solid fa-check-circle"></i> Sites vitrines responsives et ultra modernes</li>
+        <li><i class="fa-solid fa-check-circle"></i> Applications mobiles Android & iOS</li>
+        <li><i class="fa-solid fa-check-circle"></i> Boutiques e-commerce rapides & sécurisées</li>
+        <li><i class="fa-solid fa-check-circle"></i> Intégration API & bases de données</li>
+        <li><i class="fa-solid fa-check-circle"></i> Maintenance, support & mises à jour</li>
+      </ul>
+
+      <img class="service-img" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80" alt="Développement Web">
+
+      <a href="{% url 'services' %}" class="btn-retour">
+        <i class="fa-solid fa-arrow-left"></i> Retour aux services
+      </a>
+    </div>
+
+  </section>
+</body>
+</html>

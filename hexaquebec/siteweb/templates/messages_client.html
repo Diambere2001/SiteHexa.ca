@@ -1,0 +1,37 @@
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">📩 Messages de {{ client.entreprise }}</h2>
+
+    {% if messages %}
+        <div class="list-group">
+            {% for msg in messages %}
+                <div class="list-group-item mb-3 shadow-sm" style="border-radius: 10px;">
+                    <div class="d-flex justify-content-between">
+                        <h5 class="mb-1">Message envoyé</h5>
+                        <small class="text-muted">{{ msg.date|date:"d/m/Y H:i" }}</small>
+                    </div>
+
+                    <p class="mb-2">{{ msg.message }}</p>
+
+                    {% if msg.reponse %}
+                        <div class="alert alert-success mt-3">
+                            <strong>Réponse :</strong> {{ msg.reponse }}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning mt-3">
+                            ⏳ En attente de réponse…
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            Vous n'avez encore envoyé aucun message.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

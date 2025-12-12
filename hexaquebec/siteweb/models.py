@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+import random
+import uuid
+
+
+
 
 
 
@@ -23,6 +28,8 @@ class Product(models.Model):
     published_at = models.DateTimeField(blank=True, null=True)
     stock = models.PositiveIntegerField(default=1)
     image = models.ImageField(upload_to="products/", blank=True, null=True)
+    likes = models.ManyToManyField(User, related_name='liked_products', blank=True)
+
 
     def publish(self):
         """Publie le produit sur le site."""
@@ -33,23 +40,40 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+    def total_likes(self):
+        return self.likes.count()
+
+    def user_has_liked(self, user):
+        return self.likes.filter(id=user.id).exists()
+
+
+
 
 # ------------------------
 # Modèle : Commande
-# ------------------------
+# ------------------------class Order(models.Model):
 class Order(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
     adresse = models.TextField()
-    telephone = models.CharField(max_length=20)
+    telephone = models.CharField(max_length=20, blank=True)
     courriel = models.EmailField()
-    date_commande = models.DateTimeField(default=timezone.now)
+    date_created = models.DateTimeField(default=timezone.now)
+    code = models.CharField(max_length=12, unique=True, editable=False, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.code:
+            # Générer un code unique de 12 chiffres
+            while True:
+                new_code = str(uuid.uuid4().int)[:12]
+                if not Order.objects.filter(code=new_code).exists():
+                    self.code = new_code
+                    break
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Commande #{self.id} - {self.nom} {self.prenom} ({self.product.title})"
-
-
+        return f"COMMANDE#{self.code}"
 
 # ------------------------
 # Modèle : Annonce
@@ -121,3 +145,107 @@ class Commentaire(models.Model):
 
     def __str__(self):
         return f"{self.nom} ({self.email})"
+
+
+
+
+
+def generate_client_number():
+    return "HEX-" + str(random.randint(100000, 999999))
+
+class Client(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    entreprise = models.CharField(max_length=150)
+    contact = models.CharField(max_length=100)
+    adresse = models.CharField(max_length=255)
+    numero_client = models.CharField(max_length=20, unique=True, default=generate_client_number)
+
+    def __str__(self):
+        return f"{self.entreprise} ({self.numero_client})"
+
+
+class MessageClient(models.Model):
+    client = models.ForeignKey("Client", on_delete=models.CASCADE)
+    expediteur = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    message = models.TextField()
+    reponse = models.TextField(null=True, blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+    date_reponse = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Message de {self.client}"
+class RendezVous(models.Model):
+    SERVICE_CHOICES = [
+        ('commercial', 'Commercial'),
+        ('industriel', 'Industriel'),
+        ('gouvernemental', 'Gouvernemental'),
+        ('autre', 'Autre'),
+    ]
+
+    STATUT_CHOICES = [
+        ('en_attente', 'En attente'),
+        ('confirme', 'Confirmé'),
+        ('annule', 'Annulé'),
+    ]
+
+    client = models.ForeignKey('Client', on_delete=models.CASCADE)
+    date = models.DateField()
+    heure = models.TimeField()
+    service = models.CharField(max_length=50, choices=SERVICE_CHOICES)
+    statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default='en_attente')
+
+    def __str__(self):
+        return f"{self.client.user.username} - {self.service} - {self.date} {self.heure}"
+
+
+class Partenaire(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="partenaires")
+    nom_entreprise = models.CharField(max_length=200)
+    telephone = models.CharField(max_length=20)
+    activite = models.TextField()
+    statut = models.CharField(max_length=20, default="En attente")
+    logo = models.ImageField(upload_to="logos/", blank=True, null=True)   # ✔ ajouté ici
+
+    def __str__(self):
+        return self.nom_entreprise
+
+class Projet(models.Model):
+    titre = models.CharField(max_length=200)
+    categorie = models.CharField(max_length=100)
+    description = models.TextField()
+    image = models.ImageField(upload_to="projets/")
+
+    def __str__(self):
+        return self.titre
+
+class MessageContact(models.Model):
+    nom = models.CharField(max_length=150)
+    email = models.EmailField()
+    sujet = models.CharField(max_length=200)
+    message = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    lu = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.nom} - {self.sujet}"
+
+class Message(models.Model):
+    expediteur = models.ForeignKey(User, on_delete=models.CASCADE, related_name="messages_envoyes")
+    destinataire_email = models.EmailField()
+    objet = models.CharField(max_length=255)
+    contenu = models.TextField()
+    fichier = models.FileField(upload_to='documents/', null=True, blank=True)  # <-- nouveau champ
+    date_envoi = models.DateTimeField(auto_now_add=True)
+
+class CommentPro(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # ➜ Ajouter ceci
+    commentaire = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    note = models.PositiveIntegerField(default=5)  # ⭐⭐⭐⭐⭐
+
+    def __str__(self):
+        return f"Commentaire du {self.date}"
+
+
+
+

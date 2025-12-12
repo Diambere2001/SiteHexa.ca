@@ -5,109 +5,216 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ annonce.titre }}</title>
+
+  <!-- Bootstrap + Animate + AOS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     body {
-      background-color: #0b132b;
+      font-family: "Poppins", sans-serif;
+      background: #0b132b;
       color: #fff;
-      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
     }
-    .container {
-      max-width: 1200px;
+
+    /* ===== Card Google Premium ===== */
+    .google-card {
+        background: linear-gradient(135deg, #0e1736, #111c44);
+        padding: 40px;
+        border-radius: 25px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.45);
+        transition: 0.5s ease;
+        position: relative;
+        overflow: hidden;
     }
-    h1 {
-      color: #c6a87d;
-      font-weight: 700;
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
+
+    .google-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55);
     }
-    p {
-      line-height: 1.8;
-      font-size: 1.05rem;
+
+    .google-card::after {
+        content: "";
+        position: absolute;
+        width: 250%;
+        height: 250%;
+        top: -120%;
+        left: -40%;
+        background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 60%);
+        animation: rotateGlow 12s linear infinite;
     }
-    .badge-date {
-      background: linear-gradient(135deg, #c6a87d, #ffd27f);
-      color: #0b132b;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
+
+    @keyframes rotateGlow {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* ===== Animated Gold Line ===== */
+    .gold-line {
+      width: 160px;
+      height: 5px;
+      background: linear-gradient(90deg, #ffdd8a, #ffcc74, #e9b45c, #ffdd8a);
+      background-size: 300% 100%;
       border-radius: 50px;
-      display: inline-block;
-      font-size: 0.95rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      margin: 20px 0;
+      animation: moveGold 4s infinite linear;
     }
-    .logo-hex {
-      width: 80px;
-      height: 60px;
-      border-radius: 40%;
-      object-fit: contain;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+
+    @keyframes moveGold {
+      0% { background-position: 0%; }
+      100% { background-position: 300%; }
     }
-    .btn-outline-light {
-      border-color: #c6a87d;
-      color: #c6a87d;
-      border-radius: 30px;
-      padding: 0.6rem 1.5rem;
-      font-weight: 600;
-      transition: 0.3s;
+
+    /* ===== Logo Circle ===== */
+    .logo-circle {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        padding: 8px;
+        transition: 0.4s;
     }
-    .btn-outline-light:hover {
-      background-color: #c6a87d;
-      color: #0b132b !important;
-      transform: scale(1.05);
+
+    .logo-circle img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
+
+    .logo-circle:hover {
+        transform: rotate(8deg) scale(1.05);
+    }
+
+    /* ===== Image animée ===== */
     .annonce-img {
-      max-height: 500px;
       width: 100%;
+      max-width: 580px;
+      max-height: 340px;
       object-fit: cover;
-      border: 3px solid #c6a87d;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-      transition: transform 0.3s, box-shadow 0.3s;
+      border-radius: 22px;
+      margin: auto;
+      display: block;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+      transition: 0.55s ease;
     }
+
     .annonce-img:hover {
-      transform: scale(1.03);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+      transform: scale(1.06) rotate(-1deg);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.55);
     }
-    .meta-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .annonce-img {
+        max-height: 260px;
+      }
+    }
+
+    /* ===== Buttons ===== */
+    .btn-dark {
+      background: linear-gradient(135deg, #1b1f2a, #0e1118);
+      border: none;
+      font-weight: 600;
+      padding: 12px 25px;
+      transition: 0.35s;
+    }
+
+    .btn-dark:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #232836, #141822);
+    }
+
+    /* ===== Social Share ===== */
+    .social-share i {
+      font-size: 2rem;
+      margin: 0 12px;
+      transition: 0.35s;
+      padding: 10px;
+      border-radius: 50%;
+    }
+
+    .social-share i:hover {
+      transform: scale(1.25) rotate(10deg);
+      background: rgba(255,255,255,0.1);
     }
   </style>
 </head>
+
 <body>
 
-  <section class="py-5">
-    <div class="container py-5">
-      <div class="row align-items-center g-5">
-        
-        <!-- Texte à gauche -->
-        <div class="col-lg-6">
-          <div class="meta-badge">
-            <img src="{% static 'images/HexaQuebec.png' %}" alt="HexaQuebec" class="logo-hex" />
-            <span class="badge-date">🗓️ Publié le {{ annonce.published_at|date:"d M Y" }} par HexaQuebec</span>
-          </div>
+<!-- HEADER -->
+<div class="container py-5">
+  <div class="google-card" data-aos="zoom-out">
 
-          <h1>{{ annonce.titre }}</h1>
-          <p>{{ annonce.content }}</p>
-          <a href="{% url 'home' %}" class="btn btn-outline-light mt-4">← Retour aux annonces</a>
-        </div>
+    <div class="d-flex align-items-center gap-4">
+      <div class="logo-circle">
+        <img src="{% static 'images/logoHexa.png' %}" alt="HexaQuébec">
+      </div>
 
-        <!-- Image à droite -->
-        <div class="col-lg-6 text-center">
-          {% if annonce.image %}
-            <img src="{{ annonce.image.url }}" alt="{{ annonce.titre }}" class="img-fluid annonce-img">
-          {% else %}
-            <img src="{% static 'images/default-annonce.jpg' %}" alt="Annonce" class="img-fluid annonce-img">
-          {% endif %}
-        </div>
-
+      <div>
+        <h2 class="mb-1 fw-bold text-white">HexaQuébec</h2>
+        <span class="badge bg-light text-dark rounded-pill px-3 py-1">
+            🗓️ Publié le {{ annonce.published_at|date:"d M Y" }}
+        </span>
       </div>
     </div>
-  </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="gold-line"></div>
+
+    <h1 class="mt-3 fw-bold text-white">{{ annonce.titre }}</h1>
+    <p class="mt-3 text-light">{{ annonce.content }}</p>
+<a href="{% url 'home' %}" 
+   class="btn btn-dark rounded-pill mt-3"
+   style="position: relative; z-index: 9999;">
+  ← Retour aux annonces
+</a>
+
+  </div>
+</div>
+
+<!-- IMAGE -->
+<div class="container pb-5" data-aos="zoom-in-up">
+  {% if annonce.image %}
+      <img src="{{ annonce.image.url }}" alt="{{ annonce.titre }}" class="annonce-img">
+  {% else %}
+      <img src="{% static 'images/default-annonce.jpg' %}" class="annonce-img">
+  {% endif %}
+</div>
+
+<!-- SOCIAL SHARE -->
+<div class="container text-center pb-5">
+  <h4 class="fw-bold text-white">Partager l'annonce</h4>
+
+  <div class="social-share mt-3">
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">
+          <i class="fab fa-facebook text-white"></i>
+      </a>
+
+      <a href="https://www.tiktok.com/share?url={{ request.build_absolute_uri }}" target="_blank">
+          <i class="fab fa-tiktok text-white"></i>
+      </a>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 900,
+    once: true,
+    offset: 80,
+  });
+</script>
+
 </body>
 </html>
