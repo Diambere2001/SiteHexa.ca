@@ -1,1 +1,2 @@
-web: gunicorn hexaquebec.wsgi
+web: gunicorn hexaquebec.wsgi:application
+
