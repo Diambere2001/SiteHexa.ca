@@ -19,7 +19,10 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     "hexaquebec80.onrender.com",
+    "hexaquebec.com",
+    "www.hexaquebec.com",
 ]
+
 
 # ========================
 # APPS
